@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "justdrop": {
+      "command": "npx",
+      "args": ["-y", "justdrop-mcp"]
+    }
+  }
+}

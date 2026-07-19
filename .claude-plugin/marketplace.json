@@ -1,0 +1,14 @@
+{
+  "name": "justdrop",
+  "owner": {
+    "name": "JustDrop",
+    "url": "https://justdrop.ai"
+  },
+  "plugins": [
+    {
+      "name": "justdrop",
+      "source": ".",
+      "description": "Send and receive files between Claude and any device — live, end-to-end encrypted, ephemeral. Adds the /justdrop command and the JustDrop MCP tools (drop, receive, status, cancel)."
+    }
+  ]
+}

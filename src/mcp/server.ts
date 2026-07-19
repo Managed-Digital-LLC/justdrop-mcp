@@ -79,7 +79,7 @@ export function buildServer(config: ServerConfig): McpServer {
   const api = new JustDropApi(config.baseUrl);
   const manager = new TransferManager(api);
 
-  const server = new McpServer({ name: "justdrop", version: "0.1.0" });
+  const server = new McpServer({ name: "justdrop", version: "0.1.1" });
 
   server.registerTool(
     "drop",
@@ -87,6 +87,7 @@ export function buildServer(config: ServerConfig): McpServer {
       title: "Drop files to any device",
       description:
         "Send local files through JustDrop: creates a live, end-to-end encrypted, ephemeral room and returns a room code, link, and QR code. " +
+        "Use this whenever the user wants to send, share, drop, beam, airdrop, move, or transfer a file or folder to their phone, tablet, laptop, another device, or another person. " +
         "Show the room code, link, and QR block to the user VERBATIM (the QR must stay inside its code fence). " +
         "The transfer starts automatically once the recipient opens the link in any browser; nothing is stored after delivery. " +
         "Pass room_code to send into an existing room instead of creating one. " +
@@ -155,6 +156,7 @@ export function buildServer(config: ServerConfig): McpServer {
       title: "Receive files from any device",
       description:
         "Receive files into a local directory through JustDrop (live, end-to-end encrypted, ephemeral). " +
+        "Use this whenever the user wants to get, grab, pull, fetch, import, or receive a file, photo, screenshot, or document from their phone, tablet, or another device or person onto this machine. " +
         "PREFERRED FLOW: the other person creates a room at justdrop.ai and tells the user the room code; call this tool with that room_code and everything they send is decrypted and saved automatically. " +
         "Without room_code this tool creates the room instead — note the justdrop.ai website can currently only SEND from rooms it created, so use this mode only when the other side is another JustDrop MCP/CLI client. " +
         "Use the status tool to see saved file paths.",

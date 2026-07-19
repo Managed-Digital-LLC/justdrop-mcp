@@ -1,0 +1,13 @@
+{
+  "name": "justdrop",
+  "version": "0.1.1",
+  "description": "Send and receive files between Claude and any device — live, end-to-end encrypted, ephemeral. No accounts, nothing stored; the other side just needs a browser.",
+  "author": {
+    "name": "JustDrop",
+    "url": "https://justdrop.ai"
+  },
+  "homepage": "https://justdrop.ai",
+  "repository": "https://github.com/Managed-Digital-LLC/justdrop-mcp",
+  "license": "MIT",
+  "keywords": ["file-transfer", "e2e-encryption", "ephemeral", "qr-code", "airdrop"]
+}
