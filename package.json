@@ -1,0 +1,63 @@
+{
+  "name": "justdrop-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for JustDrop — live, end-to-end encrypted, ephemeral file transfer between your AI agent and any device. No accounts, nothing stored.",
+  "license": "MIT",
+  "author": "JustDrop (https://justdrop.ai)",
+  "homepage": "https://justdrop.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Managed-Digital-LLC/justdrop-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Managed-Digital-LLC/justdrop-mcp/issues"
+  },
+  "type": "module",
+  "bin": {
+    "justdrop-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "verify": "node test/run-local.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "modelcontextprotocol",
+    "file-transfer",
+    "file-sharing",
+    "send-files",
+    "e2e-encryption",
+    "end-to-end-encryption",
+    "encrypted",
+    "ephemeral",
+    "no-account",
+    "qr-code",
+    "airdrop",
+    "wormhole",
+    "justdrop",
+    "claude",
+    "ai-agent"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.0",
+    "qrcode-terminal": "^0.12.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/qrcode-terminal": "^0.12.2",
+    "typescript": "^5"
+  }
+}
