@@ -12,7 +12,24 @@ Everything above the line is DONE; everything below needs Karthik's go and/or an
 - [x] Local git repo initialized, initial commit `066b96e`
 - [x] Verified green: tsc build, local e2e, **prod e2e**, **prod MCP smoke** (all 4 tools + refusals, hash-verified)
 
-## Publish day (in order)
+## Publish day — EXECUTED 2026-07-19 ✅
+
+- [x] npm account `justdrop` created (username IS the scope owner — no org needed), email verified, passkey 2FA
+- [x] GitHub repo live: https://github.com/Managed-Digital-LLC/justdrop-mcp (public, pushed)
+- [x] **`justdrop-mcp@0.1.0` PUBLISHED** — 2026-07-19T15:26:51Z, maintainer `justdrop`
+- [x] Fresh-install verified: `npx -y justdrop-mcp@0.1.0` boots clean against https://justdrop.ai
+- [x] `claude mcp add justdrop -s user -- npx -y justdrop-mcp` → ✓ Connected
+- [x] `server.json` drafted for the official MCP registry (namespace `ai.justdrop/mcp`)
+
+### Registry submissions still to do (need interactive login / DNS)
+
+- [ ] **Official MCP registry**: install `mcp-publisher` → `mcp-publisher login dns` (adds a TXT record on justdrop.ai to claim `ai.justdrop/*`) or `mcp-publisher login github` (claims `io.github.managed-digital-llc/*` instead) → validate server.json → `mcp-publisher publish`
+- [ ] **Smithery** (smithery.ai): sign in with GitHub, claim the repo
+- [ ] **mcp.so**: submit the GitHub URL via their submit flow
+- [ ] **PulseMCP / Glama**: auto-index npm+GitHub within days; submit manually to accelerate, and claim the Glama listing
+- [ ] **Announce** — per legal posture: benefit-first, never "untraceable"/"subpoena-proof"
+
+## Original runbook (in order)
 
 1. **Create the GitHub repo** `Managed-Digital-LLC/justdrop-mcp` (public) and push:
    ```bash
