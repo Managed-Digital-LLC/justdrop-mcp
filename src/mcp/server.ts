@@ -3,7 +3,6 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { JustDropApi, RoomFullError, RoomNotFoundError } from "../core/api.js";
-import { qrString } from "./qr.js";
 import {
   assertWithinRoot,
   collectFiles,
@@ -69,20 +68,14 @@ async function roomBanner(job: TransferJob, includeQr: boolean, baseUrl: string)
     `Expires: ${minutesLeft(job.expiresAt)}`,
   ];
   if (includeQr) {
-    // Three QR renderings, most portable first. Field-tested: GUI chat
-    // surfaces strip remote markdown images and shred the Unicode text QR
-    // (line spacing splits the half-block rows) — but they always render a
-    // clickable URL. Clicking opens the PNG in a browser; scan it from there.
+    // One QR rendering: a clickable URL to a hosted PNG. Field-tested as the
+    // only form every surface renders — GUI chats strip remote markdown images
+    // and shred Unicode text QRs, but links always work. Click → scan.
     const qrUrl = `${baseUrl}/api/qr/${encodeURIComponent(job.roomCode)}`;
     parts.push(`QR code (click to open, then scan with the phone): ${qrUrl}`);
-    parts.push(`![Scan to open this transfer](${qrUrl})`);
-    const qr = await qrString(job.link);
-    parts.push("Terminal QR (only aligns in a real terminal):\n```\n" + qr + "\n```");
     parts.push(
-      "ASSISTANT: your reply MUST include, verbatim: the room code, the link, AND the clickable QR-code URL line. " +
-        "If you are in a terminal, also include the terminal QR block character-for-character inside its ``` fence " +
-        "(in a GUI chat it renders broken — omit it there and rely on the QR URL; you may also include the image " +
-        "markdown line in case the surface renders images). Never describe or summarize the QR — the user needs to scan or click it."
+      "ASSISTANT: your reply MUST include, verbatim: the room code, the link, AND the QR-code URL line above. " +
+        "Never omit or summarize them — the user clicks the QR URL and scans it from the browser, or opens the link on the other device."
     );
   }
   return parts.join("\n");
@@ -92,7 +85,7 @@ export function buildServer(config: ServerConfig): McpServer {
   const api = new JustDropApi(config.baseUrl);
   const manager = new TransferManager(api);
 
-  const server = new McpServer({ name: "justdrop", version: "0.1.5" });
+  const server = new McpServer({ name: "justdrop", version: "0.1.6" });
 
   server.registerTool(
     "drop",
@@ -101,7 +94,7 @@ export function buildServer(config: ServerConfig): McpServer {
       description:
         "Send local files through JustDrop: creates a live, end-to-end encrypted, ephemeral room and returns a room code, link, and QR code. " +
         "Use this whenever the user wants to send, share, drop, beam, airdrop, move, or transfer a file or folder to their phone, tablet, laptop, another device, or another person. " +
-        "Your reply MUST include, verbatim: the room code, the link, and the clickable QR-code URL line (plus the terminal QR block character-for-character if you are in a real terminal) — the user physically scans or clicks these from your reply; never omit or summarize them. " +
+        "Your reply MUST include, verbatim: the room code, the link, and the clickable QR-code URL — the user clicks or scans these from your reply; never omit or summarize them. " +
         "The transfer starts automatically once the recipient opens the link in any browser; nothing is stored after delivery. " +
         "Pass room_code to send into an existing room instead of creating one. " +
         "Directories are expanded (dotfiles, credentials, and node_modules are always skipped). " +
