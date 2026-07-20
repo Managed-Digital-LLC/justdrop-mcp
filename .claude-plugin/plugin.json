@@ -1,6 +1,12 @@
 {
   "name": "justdrop",
-  "version": "0.1.1",
+  "version": "0.1.6",
+  "mcpServers": {
+    "justdrop": {
+      "command": "npx",
+      "args": ["-y", "justdrop-mcp"]
+    }
+  },
   "description": "Send and receive files between Claude and any device — live, end-to-end encrypted, ephemeral. No accounts, nothing stored; the other side just needs a browser.",
   "author": {
     "name": "JustDrop",
