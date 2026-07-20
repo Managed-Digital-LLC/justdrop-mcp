@@ -1,0 +1,54 @@
+{
+  "name": "justdrop",
+  "version": "0.1.0",
+  "description": "Send files to any device from your terminal — live, end-to-end encrypted, ephemeral. Scan a QR, files move, nothing is stored. Also sets up the JustDrop MCP for Claude with one command.",
+  "license": "MIT",
+  "author": "JustDrop (https://justdrop.ai)",
+  "homepage": "https://justdrop.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Managed-Digital-LLC/justdrop-mcp.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/Managed-Digital-LLC/justdrop-mcp/issues"
+  },
+  "type": "module",
+  "bin": {
+    "justdrop": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "file-transfer",
+    "file-sharing",
+    "send-files",
+    "e2e-encryption",
+    "end-to-end-encryption",
+    "ephemeral",
+    "no-account",
+    "qr-code",
+    "airdrop",
+    "wormhole",
+    "cli",
+    "mcp",
+    "claude",
+    "justdrop"
+  ],
+  "dependencies": {
+    "justdrop-mcp": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "typescript": "^5"
+  }
+}
