@@ -69,17 +69,20 @@ async function roomBanner(job: TransferJob, includeQr: boolean, baseUrl: string)
     `Expires: ${minutesLeft(job.expiresAt)}`,
   ];
   if (includeQr) {
-    // Two QR renderings: a hosted PNG (survives GUI chat surfaces, where
-    // Unicode half-block QRs shred on line spacing) and a text QR for real
-    // terminals. The assistant relays both; each surface renders what it can.
-    parts.push(`Scan on your phone:\n![Scan to open this transfer](${baseUrl}/api/qr/${encodeURIComponent(job.roomCode)})`);
+    // Three QR renderings, most portable first. Field-tested: GUI chat
+    // surfaces strip remote markdown images and shred the Unicode text QR
+    // (line spacing splits the half-block rows) — but they always render a
+    // clickable URL. Clicking opens the PNG in a browser; scan it from there.
+    const qrUrl = `${baseUrl}/api/qr/${encodeURIComponent(job.roomCode)}`;
+    parts.push(`QR code (click to open, then scan with the phone): ${qrUrl}`);
+    parts.push(`![Scan to open this transfer](${qrUrl})`);
     const qr = await qrString(job.link);
     parts.push("Terminal QR (only aligns in a real terminal):\n```\n" + qr + "\n```");
     parts.push(
-      "ASSISTANT: your reply MUST include, verbatim: the room code, the link, the image markdown line " +
-        "(![...](...) — GUI surfaces render it as a scannable image), AND the terminal QR block character-for-character " +
-        "inside its ``` fence. Never omit, describe, shorten, or summarize any of them. " +
-        "(If the user can't scan either QR, they can open the link on the other device instead.)"
+      "ASSISTANT: your reply MUST include, verbatim: the room code, the link, AND the clickable QR-code URL line. " +
+        "If you are in a terminal, also include the terminal QR block character-for-character inside its ``` fence " +
+        "(in a GUI chat it renders broken — omit it there and rely on the QR URL; you may also include the image " +
+        "markdown line in case the surface renders images). Never describe or summarize the QR — the user needs to scan or click it."
     );
   }
   return parts.join("\n");
@@ -89,7 +92,7 @@ export function buildServer(config: ServerConfig): McpServer {
   const api = new JustDropApi(config.baseUrl);
   const manager = new TransferManager(api);
 
-  const server = new McpServer({ name: "justdrop", version: "0.1.4" });
+  const server = new McpServer({ name: "justdrop", version: "0.1.5" });
 
   server.registerTool(
     "drop",
