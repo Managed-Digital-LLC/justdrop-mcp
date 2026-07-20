@@ -71,6 +71,11 @@ async function roomBanner(job: TransferJob, includeQr: boolean): Promise<string>
   if (includeQr) {
     const qr = await qrString(job.link);
     parts.push("Scan to open on a phone:\n```\n" + qr + "\n```");
+    parts.push(
+      "ASSISTANT: your reply MUST include the QR block above character-for-character inside a ``` code fence — " +
+        "never omit it, describe it, shorten it, or replace it with the link alone. It is the primary way the user " +
+        "hands the transfer to their phone. (If the user can't scan it, they can open the link on the other device instead.)"
+    );
   }
   return parts.join("\n");
 }
@@ -79,7 +84,7 @@ export function buildServer(config: ServerConfig): McpServer {
   const api = new JustDropApi(config.baseUrl);
   const manager = new TransferManager(api);
 
-  const server = new McpServer({ name: "justdrop", version: "0.1.2" });
+  const server = new McpServer({ name: "justdrop", version: "0.1.3" });
 
   server.registerTool(
     "drop",
@@ -88,7 +93,7 @@ export function buildServer(config: ServerConfig): McpServer {
       description:
         "Send local files through JustDrop: creates a live, end-to-end encrypted, ephemeral room and returns a room code, link, and QR code. " +
         "Use this whenever the user wants to send, share, drop, beam, airdrop, move, or transfer a file or folder to their phone, tablet, laptop, another device, or another person. " +
-        "Show the room code, link, and QR block to the user VERBATIM (the QR must stay inside its code fence). " +
+        "Your reply MUST reproduce the room code, link, AND the entire QR code block character-for-character inside a fenced code block — never omit, describe, truncate, or summarize the QR; the user physically scans it from your reply. " +
         "The transfer starts automatically once the recipient opens the link in any browser; nothing is stored after delivery. " +
         "Pass room_code to send into an existing room instead of creating one. " +
         "Directories are expanded (dotfiles, credentials, and node_modules are always skipped). " +
