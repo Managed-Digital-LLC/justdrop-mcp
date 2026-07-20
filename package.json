@@ -1,6 +1,7 @@
 {
   "name": "justdrop-mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
+  "mcpName": "ai.justdrop/mcp",
   "description": "MCP server for JustDrop — live, end-to-end encrypted, ephemeral file transfer between your AI agent and any device. No accounts, nothing stored.",
   "license": "MIT",
   "author": "JustDrop (https://justdrop.ai)",

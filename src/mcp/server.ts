@@ -79,7 +79,7 @@ export function buildServer(config: ServerConfig): McpServer {
   const api = new JustDropApi(config.baseUrl);
   const manager = new TransferManager(api);
 
-  const server = new McpServer({ name: "justdrop", version: "0.1.1" });
+  const server = new McpServer({ name: "justdrop", version: "0.1.2" });
 
   server.registerTool(
     "drop",

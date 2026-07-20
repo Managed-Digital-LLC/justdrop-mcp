@@ -1,20 +1,20 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
   "name": "ai.justdrop/mcp",
-  "description": "Live, end-to-end encrypted, ephemeral file transfer between your AI agent and any device. No accounts, nothing stored — the other side just needs a browser.",
+  "description": "Live, end-to-end encrypted, ephemeral file transfer between your AI agent and any device.",
   "status": "active",
   "repository": {
     "url": "https://github.com/Managed-Digital-LLC/justdrop-mcp",
     "source": "github"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "websiteUrl": "https://justdrop.ai",
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "justdrop-mcp",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "transport": {
         "type": "stdio"
       },
