@@ -62,19 +62,24 @@ function describeJob(job: TransferJob): string {
   return lines.join("\n");
 }
 
-async function roomBanner(job: TransferJob, includeQr: boolean): Promise<string> {
+async function roomBanner(job: TransferJob, includeQr: boolean, baseUrl: string): Promise<string> {
   const parts = [
     `Room code: ${job.roomCode}`,
     `Link: ${job.link}`,
     `Expires: ${minutesLeft(job.expiresAt)}`,
   ];
   if (includeQr) {
+    // Two QR renderings: a hosted PNG (survives GUI chat surfaces, where
+    // Unicode half-block QRs shred on line spacing) and a text QR for real
+    // terminals. The assistant relays both; each surface renders what it can.
+    parts.push(`Scan on your phone:\n![Scan to open this transfer](${baseUrl}/api/qr/${encodeURIComponent(job.roomCode)})`);
     const qr = await qrString(job.link);
-    parts.push("Scan to open on a phone:\n```\n" + qr + "\n```");
+    parts.push("Terminal QR (only aligns in a real terminal):\n```\n" + qr + "\n```");
     parts.push(
-      "ASSISTANT: your reply MUST include the QR block above character-for-character inside a ``` code fence — " +
-        "never omit it, describe it, shorten it, or replace it with the link alone. It is the primary way the user " +
-        "hands the transfer to their phone. (If the user can't scan it, they can open the link on the other device instead.)"
+      "ASSISTANT: your reply MUST include, verbatim: the room code, the link, the image markdown line " +
+        "(![...](...) — GUI surfaces render it as a scannable image), AND the terminal QR block character-for-character " +
+        "inside its ``` fence. Never omit, describe, shorten, or summarize any of them. " +
+        "(If the user can't scan either QR, they can open the link on the other device instead.)"
     );
   }
   return parts.join("\n");
@@ -125,7 +130,7 @@ export function buildServer(config: ServerConfig): McpServer {
         const job = await manager.startDrop(files, expiry, room_code);
 
         const lines: string[] = [];
-        lines.push(await roomBanner(job, !room_code));
+        lines.push(await roomBanner(job, !room_code, config.baseUrl));
         lines.push("");
         lines.push(`Queued ${files.length} file(s), ${humanSize(total)} total:`);
         for (const f of files) lines.push(`  - ${f.name} (${humanSize(f.size)})`);
@@ -189,7 +194,7 @@ export function buildServer(config: ServerConfig): McpServer {
         const job = await manager.startReceive(dir, expiry, room_code);
 
         const lines: string[] = [];
-        lines.push(await roomBanner(job, !room_code));
+        lines.push(await roomBanner(job, !room_code, config.baseUrl));
         lines.push("");
         lines.push(`Saving incoming files to: ${dir}`);
         lines.push(
