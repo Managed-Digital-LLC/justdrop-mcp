@@ -101,7 +101,7 @@ export function buildServer(config: ServerConfig): McpServer {
       description:
         "Send local files through JustDrop: creates a live, end-to-end encrypted, ephemeral room and returns a room code, link, and QR code. " +
         "Use this whenever the user wants to send, share, drop, beam, airdrop, move, or transfer a file or folder to their phone, tablet, laptop, another device, or another person. " +
-        "Your reply MUST reproduce the room code, link, AND the entire QR code block character-for-character inside a fenced code block — never omit, describe, truncate, or summarize the QR; the user physically scans it from your reply. " +
+        "Your reply MUST include, verbatim: the room code, the link, and the clickable QR-code URL line (plus the terminal QR block character-for-character if you are in a real terminal) — the user physically scans or clicks these from your reply; never omit or summarize them. " +
         "The transfer starts automatically once the recipient opens the link in any browser; nothing is stored after delivery. " +
         "Pass room_code to send into an existing room instead of creating one. " +
         "Directories are expanded (dotfiles, credentials, and node_modules are always skipped). " +
